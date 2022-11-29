@@ -14,6 +14,7 @@ const App = () => {
       darkGrayishBlue: "hsl(219, 9%, 45%)",
       grayishBlue: "hsl(220, 14%, 75%)",
       lightGrayishBlue: "hsl(223, 64%, 98%)",
+      borderColor: "hsl(240, 10%, 94%)",
       white: "hsl(0, 0%, 100%)",
       black: "hsl(0, 0%, 0%)",
     },

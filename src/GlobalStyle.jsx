@@ -27,6 +27,12 @@ img {
   height: auto;
 }
 
+a{
+  transition: all 0.3s ease-in-out;
+  &:hover{
+    transition: all 0.3s ease-in-out;
+  }
+}
 // General Styles
 .container{
   max-width: 1280px;
