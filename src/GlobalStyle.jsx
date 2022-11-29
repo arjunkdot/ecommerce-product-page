@@ -26,6 +26,13 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+// General Styles
+.container{
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
 `;
 
 export default GlobalStyle;

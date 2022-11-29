@@ -1,6 +1,10 @@
 import React from "react";
 import GlobalStyle from "./GlobalStyle";
 import { ThemeProvider } from "styled-components";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Home from "./Home";
+
 const App = () => {
   const theme = {
     colors: {
@@ -11,20 +15,25 @@ const App = () => {
       grayishBlue: "hsl(220, 14%, 75%)",
       lightGrayishBlue: "hsl(223, 64%, 98%)",
       white: "hsl(0, 0%, 100%)",
-      black: "hsl(0, 0%, 0%)"
+      black: "hsl(0, 0%, 0%)",
     },
     media: {
       small: "576px",
       medium: "768px",
       large: "992px",
-      xLarge: "1200px"
-    }
+      xLarge: "1200px",
+    },
   };
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <div>App</div>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 
