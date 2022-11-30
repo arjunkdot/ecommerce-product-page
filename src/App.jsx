@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import GlobalStyle from "./GlobalStyle";
 import { ThemeProvider } from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./Home";
+import { Overlay } from "./styles/Overlay";
 
 const App = () => {
   const theme = {
@@ -25,11 +26,16 @@ const App = () => {
       xLarge: "1200px",
     },
   };
+
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+
+  
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Header />
+        {isOverlayVisible ? <Overlay /> : null}
+        <Header displayOverlay={setIsOverlayVisible} />
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>

@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 
-const Header = () => {
+const Header = (props) => {
+  const [isMobNavVisible, setIsMobNavVisible] = useState(false);
+
+  // Handle mobile menu visibilty
+  const mobMenuHandler = () => {
+    setIsMobNavVisible(!isMobNavVisible);
+  };
+
+  // Used useEffect to prevent bad setState() call
+  useEffect(() => {
+    // Display overlay
+    props.displayOverlay(isMobNavVisible);
+  }, [isMobNavVisible]);
+  
+
+
   return (
     <MainHeader>
       <div className="header-left">
@@ -11,18 +26,22 @@ const Header = () => {
           src="./images/icon-menu.svg"
           className="nav-menu-icon"
           alt="Menu"
+          onClick={mobMenuHandler}
         />
         <NavLink to="/">
           <img src="/images/logo.svg" className="navbar-logo" alt="Sneakers" />
         </NavLink>
-        <div className="navbar-container">
-          <img
-            src="./images/icon-close.svg"
-            className="nav-menu-close"
-            alt="Close"
-          />
-          <Navbar />
-        </div>
+        {isMobNavVisible && (
+          <div className="navbar-container">
+            <img
+              src="./images/icon-close.svg"
+              className="nav-menu-close"
+              alt="Close"
+              onClick={mobMenuHandler}
+            />
+            <Navbar />
+          </div>
+        )}
       </div>
       <div className="header-right">
         <img src="./images/icon-cart.svg" className="cart-icon" alt="Cart" />
@@ -118,6 +137,12 @@ const MainHeader = styled.header`
       left: 0;
       top: 0;
       z-index: 99;
+    }
+  }
+
+  .nav-mob-hidden {
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
+      display: none;
     }
   }
 `;
