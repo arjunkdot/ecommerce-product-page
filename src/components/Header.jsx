@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import Cart from "./Cart";
 import Navbar from "./Navbar";
 
 const Header = (props) => {
   const [isMobNavVisible, setIsMobNavVisible] = useState(false);
+  const [isCartVisible, setIsCartVisible] = useState(false);
 
   // Handle mobile menu visibilty
   const mobMenuHandler = () => {
     setIsMobNavVisible(!isMobNavVisible);
+  };
+
+  // Handle mobile menu visibilty
+  const cartHandler = () => {
+    setIsCartVisible(!isCartVisible);
   };
 
   // Used useEffect to prevent bad setState() call
@@ -16,8 +23,6 @@ const Header = (props) => {
     // Display overlay
     props.displayOverlay(isMobNavVisible);
   }, [isMobNavVisible]);
-  
-
 
   return (
     <MainHeader>
@@ -31,20 +36,28 @@ const Header = (props) => {
         <NavLink to="/">
           <img src="/images/logo.svg" className="navbar-logo" alt="Sneakers" />
         </NavLink>
-        {isMobNavVisible && (
-          <div className="navbar-container">
-            <img
-              src="./images/icon-close.svg"
-              className="nav-menu-close"
-              alt="Close"
-              onClick={mobMenuHandler}
-            />
-            <Navbar />
-          </div>
-        )}
+        <div
+          className={`navbar-container ${
+            isMobNavVisible ? "" : "nav-mob-hidden"
+          }`}
+        >
+          <img
+            src="./images/icon-close.svg"
+            className="nav-menu-close"
+            alt="Close"
+            onClick={mobMenuHandler}
+          />
+          <Navbar />
+        </div>
       </div>
       <div className="header-right">
-        <img src="./images/icon-cart.svg" className="cart-icon" alt="Cart" />
+        <img
+          src="./images/icon-cart.svg"
+          onClick={cartHandler}
+          className="cart-icon"
+          alt="Cart"
+        />
+        {isCartVisible ? <Cart /> : null}
         <div className="user-avatar-container">
           <img
             src="./images/image-avatar.png"
@@ -72,12 +85,14 @@ const MainHeader = styled.header`
     display: flex;
     align-items: center;
   }
-  .header-right {
-    * {
-      &:first-child {
-        margin-right: 2rem;
-      }
+  .header-right > * {
+    &:first-child {
+      margin-right: 2rem;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.media.small}) {
+    height: 70px;
+    border-bottom: none;
   }
   .navbar-logo {
     margin-right: 2.5rem;
@@ -93,6 +108,17 @@ const MainHeader = styled.header`
     &:hover {
       border: 2px solid ${({ theme }) => theme.colors.orange};
       transition: all 0.3s ease-in-out;
+    }
+
+
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
+      height: 40px;
+      width: 40px;
+    }
+
+    @media (max-width: ${({ theme }) => theme.media.small}) {
+      height: 32px;
+      width: 32px;
     }
   }
   .cart-icon {
@@ -120,6 +146,7 @@ const MainHeader = styled.header`
     height: 18px;
     position: absolute;
     top: 30px;
+    cursor: pointer;
     @media (max-width: ${({ theme }) => theme.media.medium}) {
       display: inline-block;
     }
