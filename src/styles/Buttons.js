@@ -16,6 +16,10 @@ const Button = styled.button`
   &:hover{
     transition: all 0.3s ease-in-out;
   }
+
+  img:first-child{
+    margin-right: 0.75rem;
+  }
 `;
 
 // Primary Button
@@ -25,6 +29,11 @@ export const ButtonPrimary = styled(Button)`
 
   &:hover{
     filter: contrast(95%);
+  }
+
+  img{
+    fill: ${({theme})=> theme.colors.white};
+    stroke: ${({theme})=> theme.colors.white};
   }
 `
 /// Primary Block Button
