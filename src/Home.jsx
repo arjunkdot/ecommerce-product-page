@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { ButtonPrimaryBlock } from "./styles/Buttons";
+import { ButtonPrimaryBlockShadow } from "./styles/Buttons";
 import { BadgePrimary } from "./styles/Badges";
+import Counter from "./components/Counter";
 
 const Home = () => {
   return (
@@ -23,7 +24,16 @@ const Home = () => {
           <span className="product-original-price">$250.00</span>
 
           <div className="product-actions">
-            <ButtonPrimaryBlock><img src="./images/icon-cart.svg" width="16" height="16" alt="" /> Add to cart</ButtonPrimaryBlock>
+            <Counter />
+            <ButtonPrimaryBlockShadow>
+              <img
+                src="./images/icon-cart-white.svg"
+                width="16"
+                height="16"
+                alt=""
+              />{" "}
+              Add to cart
+            </ButtonPrimaryBlockShadow>
           </div>
         </div>
       </Homepage>
@@ -64,7 +74,7 @@ const Homepage = styled.section`
     font-size: 0.9rem;
     display: block;
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .product-price-container {
@@ -88,7 +98,10 @@ const Homepage = styled.section`
     text-decoration: line-through;
   }
 
-  .product-actions{
-    margin-top: 1.25rem;
+  .product-actions {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    margin-top: 1.5rem;
+
   }
 `;

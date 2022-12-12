@@ -39,5 +39,14 @@ export const ButtonPrimary = styled(Button)`
 /// Primary Block Button
 export const ButtonPrimaryBlock = styled(ButtonPrimary)`
   width: 100%;
-  
+`;
+
+/// Primary Block Button w/ Shadow
+export const ButtonPrimaryBlockShadow = styled(ButtonPrimary)`
+  width: 100%;
+  box-shadow: 0px 20px 25px 0px hsl(25, 100%, 95%);
+
+  &:hover{
+    opacity: 0.7;
+  }
 `;
