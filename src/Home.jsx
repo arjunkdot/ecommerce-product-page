@@ -3,12 +3,15 @@ import styled from "styled-components";
 import { ButtonPrimaryBlockShadow } from "./styles/Buttons";
 import { BadgePrimary } from "./styles/Badges";
 import Counter from "./components/Counter";
+import Slider from "./components/Slider";
 
 const Home = () => {
   return (
     <div className="container">
       <Homepage>
-        <div>Carousel goes here</div>
+        <div className="product-image">
+          <Slider />
+        </div>
         <div className="product-meta">
           <span className="product-category">Sneaker Company</span>
           <span className="product-name">Fall Limited Edition Sneakers</span>
@@ -47,7 +50,7 @@ const Homepage = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
-  .product-meta {
+  .product-meta, .product-image {
     padding: 8rem;
   }
 
