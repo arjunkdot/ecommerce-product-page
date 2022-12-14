@@ -5,7 +5,12 @@ const Slider = () => {
   return (
     <ProductSlider>
       <div className="product-image-spotlight">
-        <img src="./images/image-product-1.jpg" />
+        <div className="product-images">
+          <img src="./images/image-product-1.jpg" />
+          <img src="./images/image-product-2.jpg" />
+          <img src="./images/image-product-3.jpg" />
+          <img src="./images/image-product-4.jpg" />
+        </div>
       </div>
       <ul className="product-thumbnails">
         <li className="product-thumbnail active">
@@ -54,15 +59,15 @@ const ProductSlider = styled.div`
     border-radius: 0.5rem;
     overflow: hidden;
     cursor: pointer;
-    
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: all 0.4s ease-in-out;
     }
-    &:hover{
-      img{
+    &:hover {
+      img {
         opacity: 0.7;
         transition: all 0.4s ease-in-out;
       }
@@ -70,8 +75,12 @@ const ProductSlider = styled.div`
   }
   .product-thumbnail.active {
     border: 2px solid ${({ theme }) => theme.colors.orange};
-    img{
+    img {
       opacity: 0.7;
     }
+  }
+  .product-images{
+    display: flex;
+    align-items: center;
   }
 `;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ButtonPrimaryBlockShadow } from "./styles/Buttons";
 import { BadgePrimary } from "./styles/Badges";
@@ -6,6 +6,23 @@ import Counter from "./components/Counter";
 import Slider from "./components/Slider";
 
 const Home = () => {
+  const [data, setData] = useState(null);
+ 
+  useEffect(function () {
+    fetch("./data.json")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      setData(data);
+      console.log(data)
+    })
+    .catch(function (err) {
+      console.log("Error", err);
+    });
+  },[])
+
+  
   return (
     <div className="container">
       <Homepage>
@@ -14,7 +31,7 @@ const Home = () => {
         </div>
         <div className="product-meta">
           <span className="product-category">Sneaker Company</span>
-          <span className="product-name">Fall Limited Edition Sneakers</span>
+          <span className="product-name">{data ? data[0].productName : null}</span>
           <span className="product-description">
             These low-profile sneakers are your perfect casual wear companion.
             Featuring a durable rubber outer sole, they&apos;ll withstand
@@ -50,7 +67,8 @@ const Homepage = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
-  .product-meta, .product-image {
+  .product-meta,
+  .product-image {
     padding: 8rem;
   }
 
@@ -105,6 +123,5 @@ const Homepage = styled.section`
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     margin-top: 1.5rem;
-
   }
 `;
