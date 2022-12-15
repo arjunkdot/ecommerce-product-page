@@ -15,7 +15,6 @@ const Home = () => {
     })
     .then(function (data) {
       setData(data);
-      console.log(data)
     })
     .catch(function (err) {
       console.log("Error", err);
@@ -27,21 +26,19 @@ const Home = () => {
     <div className="container">
       <Homepage>
         <div className="product-image">
-          <Slider />
+          {data ? <Slider images={data.productImages} thumbnails={data.productThumbnails} /> : null}
         </div>
         <div className="product-meta">
           <span className="product-category">Sneaker Company</span>
-          <span className="product-name">{data ? data[0].productName : null}</span>
+          <span className="product-name">{data ? data.productName : null}</span>
           <span className="product-description">
-            These low-profile sneakers are your perfect casual wear companion.
-            Featuring a durable rubber outer sole, they&apos;ll withstand
-            everything the weather can offer.
+            {data ? data.productDescripiton : null}
           </span>
           <div className="product-price-container">
-            <span className="product-price">$125.00</span>
-            <BadgePrimary>50%</BadgePrimary>
+            <span className="product-price">${data ? parseFloat(data.discountedPrice).toFixed(2) : null}</span>
+            <BadgePrimary>{data ? data.discount : null}%</BadgePrimary>
           </div>
-          <span className="product-original-price">$250.00</span>
+          <span className="product-original-price">${data ? parseFloat(data.price).toFixed(2) : null}</span>
 
           <div className="product-actions">
             <Counter />

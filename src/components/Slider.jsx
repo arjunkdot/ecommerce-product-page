@@ -1,30 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-const Slider = () => {
+const Slider = ({ images, thumbnails }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  console.log(currentSlide);
   return (
     <ProductSlider>
       <div className="product-image-spotlight">
-        <div className="product-images">
-          <img src="./images/image-product-1.jpg" />
-          <img src="./images/image-product-2.jpg" />
-          <img src="./images/image-product-3.jpg" />
-          <img src="./images/image-product-4.jpg" />
+        <div
+          className="product-images" data-target={currentSlide}
+          style={{transform: 'translateX(-'+(currentSlide * 100)+'%)'}}
+        >
+          {images.map((image, i) => {
+            return <img src={"images/" + image} key={i} />;
+          })}
         </div>
       </div>
       <ul className="product-thumbnails">
-        <li className="product-thumbnail active">
-          <img src="./images/image-product-1-thumbnail.jpg" />
-        </li>
-        <li className="product-thumbnail">
-          <img src="./images/image-product-2-thumbnail.jpg" />
-        </li>
-        <li className="product-thumbnail">
-          <img src="./images/image-product-3-thumbnail.jpg" />
-        </li>
-        <li className="product-thumbnail">
-          <img src="./images/image-product-4-thumbnail.jpg" />
-        </li>
+        {thumbnails.map((thumbnail, i) => {
+          let slideNo = i;
+          return (
+            <li
+              key={i}
+              data-target={i}
+              onClick={()=> setCurrentSlide(slideNo)}
+              className={`product-thumbnail ${i == currentSlide ? "active" : ''}`}
+            >
+              <img src={"images/" + thumbnail} />;
+            </li>
+          );
+        })}
       </ul>
     </ProductSlider>
   );
@@ -79,8 +84,9 @@ const ProductSlider = styled.div`
       opacity: 0.7;
     }
   }
-  .product-images{
+  .product-images {
     display: flex;
     align-items: center;
+    transition: all 0.5s ease-in-out;
   }
 `;
