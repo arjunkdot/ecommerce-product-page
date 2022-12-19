@@ -4,29 +4,34 @@ import { ButtonPrimaryBlockShadow } from "./styles/Buttons";
 import { BadgePrimary } from "./styles/Badges";
 import Counter from "./components/Counter";
 import Slider from "./components/Slider";
+import { Overlay } from "./styles/Overlay";
 
 const Home = () => {
   const [data, setData] = useState(null);
- 
+
   useEffect(function () {
     fetch("./data.json")
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      setData(data);
-    })
-    .catch(function (err) {
-      console.log("Error", err);
-    });
-  },[])
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        setData(data);
+      })
+      .catch(function (err) {
+        console.log("Error", err);
+      });
+  }, []);
 
-  
   return (
     <div className="container">
       <Homepage>
         <div className="product-image">
-          {data ? <Slider images={data.productImages} thumbnails={data.productThumbnails} showNav={false} /> : null}
+          {data ? (
+            <Slider
+              images={data.productImages}
+              thumbnails={data.productThumbnails}
+            />
+          ) : null}
         </div>
         <div className="product-meta">
           <span className="product-category">Sneaker Company</span>
@@ -35,10 +40,14 @@ const Home = () => {
             {data ? data.productDescripiton : null}
           </span>
           <div className="product-price-container">
-            <span className="product-price">${data ? parseFloat(data.discountedPrice).toFixed(2) : null}</span>
+            <span className="product-price">
+              ${data ? parseFloat(data.discountedPrice).toFixed(2) : null}
+            </span>
             <BadgePrimary>{data ? data.discount : null}%</BadgePrimary>
           </div>
-          <span className="product-original-price">${data ? parseFloat(data.price).toFixed(2) : null}</span>
+          <span className="product-original-price">
+            ${data ? parseFloat(data.price).toFixed(2) : null}
+          </span>
 
           <div className="product-actions">
             <Counter />

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Overlay = styled.div`
-@media (max-width: ${({ theme }) => theme.media.medium}){
  display: block;
  position: fixed;
  left: 0;
@@ -10,5 +9,4 @@ export const Overlay = styled.div`
  width: 100%;
  z-index: 98;
  background: rgba(0, 0, 0, 75%);
-}
 `;

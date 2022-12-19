@@ -1,7 +1,42 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Overlay } from "../styles/Overlay";
 
-const Slider = ({ images, thumbnails, showNav }) => {
+const Slider = ({ images, thumbnails }) => {
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+  return (
+    <>
+      {isOverlayVisible ? (
+        <SliderOverlay>
+          <Carousel
+            images={images}
+            thumbnails={thumbnails}
+            showControls={true}
+            visibilityHandler={setIsOverlayVisible}
+          />
+
+          <Overlay />
+        </SliderOverlay>
+      ) : null}
+
+      <Carousel
+        images={images}
+        thumbnails={thumbnails}
+        showNav={false}
+        visibilityHandler={setIsOverlayVisible}
+      />
+    </>
+  );
+};
+
+export default Slider;
+
+const Carousel = ({
+  images,
+  thumbnails,
+  showControls,
+  visibilityHandler,
+}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   function handleNavigation(mode) {
@@ -13,10 +48,29 @@ const Slider = ({ images, thumbnails, showNav }) => {
     }
   }
 
+  function toggleOverlay(clickedSlide) {
+    setCurrentSlide(clickedSlide);
+    visibilityHandler(true);
+  }
+
   return (
-    <ProductSlider>
+    <ProductCarousel>
       <div className="product-image-spotlight">
-        {showNav ? (
+        {showControls ? (
+          <button
+            className="close-button"
+            onClick={() => visibilityHandler(false)}
+          >
+            <svg width="14" height="15" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="m11.596.782 2.122 2.122L9.12 7.499l4.597 4.597-2.122 2.122L7 9.62l-4.595 4.597-2.122-2.122L4.878 7.5.282 2.904 2.404.782l4.595 4.596L11.596.782Z"
+                fillRule="evenodd"
+              />
+            </svg>
+          </button>
+        ) : null}
+
+        {showControls ? (
           <button
             onClick={() => handleNavigation("prev")}
             className="product-images-nav product-images-nav--prev"
@@ -32,7 +86,7 @@ const Slider = ({ images, thumbnails, showNav }) => {
           </button>
         ) : null}
 
-        {showNav ? (
+        {showControls ? (
           <button
             onClick={() => handleNavigation("next")}
             className="product-images-nav product-images-nav--next"
@@ -54,7 +108,13 @@ const Slider = ({ images, thumbnails, showNav }) => {
           style={{ transform: "translateX(-" + currentSlide * 100 + "%)" }}
         >
           {images.map((image, i) => {
-            return <img src={"images/" + image} key={i} />;
+            return (
+              <img
+                src={"images/" + image}
+                key={i}
+                onClick={() => toggleOverlay(i)}
+              />
+            );
           })}
         </div>
       </div>
@@ -75,26 +135,25 @@ const Slider = ({ images, thumbnails, showNav }) => {
           );
         })}
       </ul>
-    </ProductSlider>
+    </ProductCarousel>
   );
 };
 
-export default Slider;
-
-const ProductSlider = styled.div`
+const ProductCarousel = styled.div`
   position: relative;
 
   .product-image-spotlight {
     margin-bottom: 1.5rem;
     border-radius: 1rem;
     overflow: hidden;
-    width: 385;
+    width: 385px;
     height: 385px;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      cursor: pointer;
     }
   }
   .product-thumbnails {
@@ -108,9 +167,9 @@ const ProductSlider = styled.div`
     width: 75px;
     height: 75px;
     border-radius: 0.5rem;
-    border: 2px solid transparent;
     overflow: hidden;
     cursor: pointer;
+    background-color: ${({ theme }) => theme.colors.white};
 
     img {
       width: 100%;
@@ -120,7 +179,7 @@ const ProductSlider = styled.div`
     }
     &:hover {
       img {
-        opacity: 0.4;
+        opacity: 0.3;
         transition: all 0.4s ease-in-out;
       }
     }
@@ -128,7 +187,7 @@ const ProductSlider = styled.div`
   .product-thumbnail.active {
     border: 2px solid ${({ theme }) => theme.colors.orange};
     img {
-      opacity: 0.4;
+      opacity: 0.3;
     }
   }
   .product-images {
@@ -158,9 +217,49 @@ const ProductSlider = styled.div`
     }
   }
   .product-images-nav--prev {
-    left: -25px;
+    left: -22px;
   }
   .product-images-nav--next {
-    right: -25px;
+    right: -22px;
+  }
+  .close-button {
+    position: absolute;
+    top: -30px;
+    right: 0;
+    z-index: 1;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    svg {
+      fill: ${({ theme }) => theme.colors.white};
+    }
+    &:hover {
+      svg {
+        fill: ${({ theme }) => theme.colors.orange};
+      }
+    }
+  }
+`;
+
+const SliderOverlay = styled.div`
+  & > div:first-child {
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    max-width: 485px;
+    max-height: calc(485px + 75px + 1.5rem);
+
+    .product-image-spotlight {
+      width: 485px;
+      height: 485px;
+    }
+    .product-thumbnails {
+      margin: 0 auto;
+    }
   }
 `;
