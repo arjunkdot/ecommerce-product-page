@@ -26,7 +26,7 @@ const Home = () => {
     <div className="container">
       <Homepage>
         <div className="product-image">
-          {data ? <Slider images={data.productImages} thumbnails={data.productThumbnails} /> : null}
+          {data ? <Slider images={data.productImages} thumbnails={data.productThumbnails} showNav={false} /> : null}
         </div>
         <div className="product-meta">
           <span className="product-category">Sneaker Company</span>
