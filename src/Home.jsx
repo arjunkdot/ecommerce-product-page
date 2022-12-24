@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { ButtonPrimaryBlockShadow } from "./styles/Buttons";
 import { BadgePrimary } from "./styles/Badges";
 import Counter from "./components/Counter";
 import Slider from "./components/Slider";
-import { Overlay } from "./styles/Overlay";
+import { CartContext } from "./store/CartContext";
 
 const Home = () => {
   const [data, setData] = useState(null);
+  const [itemCount, setItemCount] = useState(0);
+  const { addItem } = useContext(CartContext);
 
   useEffect(function () {
     fetch("./data.json")
@@ -21,6 +23,11 @@ const Home = () => {
         console.log("Error", err);
       });
   }, []);
+
+  function addToCartHandler(e) {
+    e.preventDefault();
+    addItem({id: data.productID, name: data.productName, quantity: itemCount, price: data.price})
+  }
 
   return (
     <div className="container">
@@ -48,10 +55,9 @@ const Home = () => {
           <span className="product-original-price">
             ${data ? parseFloat(data.price).toFixed(2) : null}
           </span>
-
           <div className="product-actions">
-            <Counter />
-            <ButtonPrimaryBlockShadow>
+            <Counter count={itemCount} countHandler={setItemCount} />
+            <ButtonPrimaryBlockShadow onClick={addToCartHandler}>
               <img
                 src="./images/icon-cart-white.svg"
                 width="16"

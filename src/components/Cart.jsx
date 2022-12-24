@@ -1,14 +1,18 @@
-import React from "react";
+import React, {useContext} from "react";
 import styled from "styled-components";
+import { CartContext } from "../store/CartContext";
 import { ButtonPrimaryBlock } from "../styles/Buttons";
 import CartItem from "./CartItem";
 
 const Cart = () => {
+  const { items, removeItem } = useContext(CartContext);
+
   return (
     <ShoppingCart>
       <div className="shopping-cart-header">Cart</div>
       <div className="shopping-cart-body">
-        <CartItem />
+        {items && items.map(item=> <CartItem key={item.id} removeHandler={removeItem} item={item} />)}
+        
         <ButtonPrimaryBlock>Checkout</ButtonPrimaryBlock>
       </div>
     </ShoppingCart>
@@ -27,7 +31,8 @@ const ShoppingCart = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 15px 35px -5px;
-
+  z-index: 99;
+  
   .shopping-cart-header {
     border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
     display: flex;

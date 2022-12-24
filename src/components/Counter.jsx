@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
-const Counter = () => {
-  const [count, setCount] = useState(0);
+const Counter = ({count, countHandler}) => {
+
 
   const plusClickHandler = () => {
-    setCount(count + 1);
+    countHandler(count + 1);
   };
 
   const minusClickHandler = () => {
-    if (count != 0) setCount(count - 1);
+    if (count != 0) countHandler(count - 1);
   };
   return (
     <QtyCounter>

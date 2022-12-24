@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./Home";
 import { Overlay } from "./styles/Overlay";
+import CartProvider from "./store/CartProvider";
 
 const App = () => {
   const theme = {
@@ -28,19 +29,21 @@ const App = () => {
   };
 
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+  const [cartItems, setCartItems] = useState([{qty: 3, productID:"1"}]);
 
-  
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        {isOverlayVisible ? <Overlay /> : null}
-        <Header displayOverlay={setIsOverlayVisible} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </ThemeProvider>
-    </BrowserRouter>
+    <CartProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          {isOverlayVisible ? <Overlay /> : null}
+          <Header displayOverlay={setIsOverlayVisible} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </ThemeProvider>
+      </BrowserRouter>
+    </CartProvider>
   );
 };
 

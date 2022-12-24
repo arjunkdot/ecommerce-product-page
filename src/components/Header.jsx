@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { CartContext } from "../store/CartContext";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Cart from "./Cart";
@@ -7,7 +8,7 @@ import Navbar from "./Navbar";
 const Header = (props) => {
   const [isMobNavVisible, setIsMobNavVisible] = useState(false);
   const [isCartVisible, setIsCartVisible] = useState(false);
-
+  const { items } = useContext(CartContext);
   // Handle mobile menu visibilty
   const mobMenuHandler = () => {
     setIsMobNavVisible(!isMobNavVisible);
@@ -51,12 +52,15 @@ const Header = (props) => {
         </div>
       </div>
       <div className="header-right">
-        <img
-          src="./images/icon-cart.svg"
-          onClick={cartHandler}
-          className="cart-icon"
-          alt="Cart"
-        />
+        <div className="header-cart">
+          <img
+            src="./images/icon-cart.svg"
+            onClick={cartHandler}
+            className="cart-icon"
+            alt="Cart"
+          />
+          <span className="header-cart-badge">{items.length}</span>
+        </div>
         {isCartVisible ? <Cart /> : null}
         <div className="user-avatar-container">
           <img
@@ -90,6 +94,21 @@ const MainHeader = styled.header`
       margin-right: 2rem;
     }
   }
+  .header-cart {
+    position: relative;
+  }
+  .header-cart-badge {
+    background-color: ${({ theme }) => theme.colors.orange};
+    color: ${({ theme }) => theme.colors.white};
+    font-size: 0.6rem;
+    font-weight: bold;
+    padding: 1px 7px;
+    border-radius: 25px;
+    position: absolute;
+    top: -5px;
+    right: -8px;
+  }
+
   @media (max-width: ${({ theme }) => theme.media.small}) {
     height: 70px;
     border-bottom: none;
@@ -109,7 +128,6 @@ const MainHeader = styled.header`
       border: 2px solid ${({ theme }) => theme.colors.orange};
       transition: all 0.3s ease-in-out;
     }
-
 
     @media (max-width: ${({ theme }) => theme.media.medium}) {
       height: 40px;

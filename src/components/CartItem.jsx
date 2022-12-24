@@ -1,23 +1,28 @@
 import React from "react";
 import styled from "styled-components";
+const CartItem = ({ item, removeHandler }) => {
 
-const CartItem = () => {
   return (
     <ShoppingCartItem>
       <div className="cart-item-image-container">
         <img src="./images/image-product-1-thumbnail.jpg" alt="Product Image" />
       </div>
       <div className="cart-item-meta">
-        <span className="cart-item-name">Fall Limited Edition Sneakers</span>
+        <span className="cart-item-name">{item.name}</span>
         <div className="cart-item-prices">
-          <span className="cart-item-price">$125 x 3</span>
-          <span className="cart-item-total">$375.00</span>
+          <span className="cart-item-price">
+            ${item.price} x {item.quantity}
+          </span>
+          <span className="cart-item-total">
+            ${(item.price * item.quantity).toFixed(2)}
+          </span>
         </div>
       </div>
       <img
         src="./images/icon-delete.svg"
         className="cart-item-delete"
         alt="Delete Item"
+        onClick={() => removeHandler(item.id)}
       />
     </ShoppingCartItem>
   );
