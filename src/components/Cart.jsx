@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { CartContext } from "../store/CartContext";
 import { ButtonPrimaryBlock } from "../styles/Buttons";
@@ -11,8 +11,11 @@ const Cart = () => {
     <ShoppingCart>
       <div className="shopping-cart-header">Cart</div>
       <div className="shopping-cart-body">
-        {items && items.map(item=> <CartItem key={item.id} removeHandler={removeItem} item={item} />)}
-        
+        {items.length > 0 &&
+          items.map((item) => (
+            <CartItem key={item.id} removeHandler={removeItem} item={item} />
+          ))}
+
         <ButtonPrimaryBlock>Checkout</ButtonPrimaryBlock>
       </div>
     </ShoppingCart>
