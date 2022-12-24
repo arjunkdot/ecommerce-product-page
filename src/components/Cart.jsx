@@ -3,22 +3,28 @@ import styled from "styled-components";
 import { CartContext } from "../store/CartContext";
 import { ButtonPrimaryBlock } from "../styles/Buttons";
 import CartItem from "./CartItem";
+import OutsideClickHandler from "./OutSideClickHandler";
 
-const Cart = () => {
+const Cart = ({visibiltiyHandler}) => {
   const { items, removeItem } = useContext(CartContext);
 
   return (
-    <ShoppingCart>
-      <div className="shopping-cart-header">Cart</div>
-      <div className="shopping-cart-body">
-        {items.length > 0 &&
-          items.map((item) => (
-            <CartItem key={item.id} removeHandler={removeItem} item={item} />
-          ))}
-
-        <ButtonPrimaryBlock>Checkout</ButtonPrimaryBlock>
-      </div>
-    </ShoppingCart>
+    <OutsideClickHandler clickHandler={visibiltiyHandler}>
+      <ShoppingCart>
+        <div className="shopping-cart-header">Cart</div>
+        <div className="shopping-cart-body">
+          {items.length > 0 &&
+            items.map((item) => (
+              <CartItem key={item.id} removeHandler={removeItem} item={item} />
+            ))}
+          {items.length > 0 ? (
+            <ButtonPrimaryBlock>Checkout</ButtonPrimaryBlock>
+          ) : (
+            <span className="empty-cart-text">Your cart is empty.</span>
+          )}
+        </div>
+      </ShoppingCart>
+    </OutsideClickHandler>
   );
 };
 
@@ -48,9 +54,19 @@ const ShoppingCart = styled.div`
 
   .shopping-cart-body {
     padding: 20px;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     button {
       margin-top: 1rem;
     }
+  }
+
+  .empty-cart-text {
+    font-weight: bold;
+    color: ${({ theme }) => theme.colors.darkGrayishBlue};
   }
 
   @media (max-width: ${({ theme }) => theme.media.small}) {

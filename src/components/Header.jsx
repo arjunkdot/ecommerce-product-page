@@ -9,6 +9,7 @@ const Header = (props) => {
   const [isMobNavVisible, setIsMobNavVisible] = useState(false);
   const [isCartVisible, setIsCartVisible] = useState(false);
   const { totalQuantity } = useContext(CartContext);
+
   // Handle mobile menu visibilty
   const mobMenuHandler = () => {
     setIsMobNavVisible(!isMobNavVisible);
@@ -61,7 +62,7 @@ const Header = (props) => {
           />
           <span className="header-cart-badge">{totalQuantity}</span>
         </div>
-        {isCartVisible ? <Cart /> : null}
+        {isCartVisible ? <Cart visibiltiyHandler={setIsCartVisible} /> : null}
         <div className="user-avatar-container">
           <img
             src="./images/image-avatar.png"

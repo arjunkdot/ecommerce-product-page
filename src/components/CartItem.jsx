@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 const CartItem = ({ item, removeHandler }) => {
-
   return (
     <ShoppingCartItem>
       <div className="cart-item-image-container">
@@ -35,6 +34,10 @@ const ShoppingCartItem = styled.div`
   grid-template-columns: auto 1fr auto;
   gap: 0.5rem;
   align-items: center;
+  margin-bottom: 15px;
+  &:last-child {
+    margin-bottom: 0px;
+  }
 
   .cart-item-image-container {
     width: 42px;
