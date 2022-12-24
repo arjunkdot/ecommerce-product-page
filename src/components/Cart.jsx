@@ -32,7 +32,6 @@ const ShoppingCart = styled.div`
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 15px 35px -5px;
   z-index: 99;
-  
   .shopping-cart-header {
     border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
     display: flex;

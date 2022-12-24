@@ -3,6 +3,7 @@ import { CartContext } from "./CartContext";
 
 const defaultCart = {
   items: [],
+  totalQuantity: 0,
   totalAmount: 0,
 };
 
@@ -12,18 +13,24 @@ const cartReducer = (state, action) => {
       return item.id === action.item.id;
     });
 
+    const totalQuanity = (state.totalQuantity += action.item.quantity);
+    const totalAmount =
+      state.totalAmount + action.item.price * action.item.quantity;
+
     if (existingItemIndex >= 0) {
-      state.items[existingItemIndex].quantity += action.item.quantity;
+      const updatedCart = (state.items[existingItemIndex].quantity +=
+        action.item.quantity);
       return {
-        items: state.items,
-        totalAmount:
-          state.totalAmount + action.item.price * action.item.quantity,
+        items: updatedCart,
+        totalQuantity: totalQuanity,
+        totalAmount: totalAmount,
       };
     } else {
+      const updatedCart = state.items.concat(action.item);
       return {
-        items: state.items.concat(action.item),
-        totalAmount:
-          state.totalAmount + action.item.price * action.item.quantity,
+        items: updatedCart,
+        totalQuantity: totalQuanity,
+        totalAmount: totalAmount,
       };
     }
   }
@@ -34,9 +41,21 @@ const cartReducer = (state, action) => {
     });
 
     if (existingItemIndex >= 0) {
-      state.items.splice(existingItemIndex, 1);
+      const existingItemQty = state.items[existingItemIndex].quantity;
+      const existingItemPrice = state.items[existingItemIndex].price;
+      const updatedCart = state.items.filter((item) => item.id != action.id);
+      return {
+        items: updatedCart,
+        totalQuantity:
+          state.totalQuanity > 0 ? (state.totalQuantity -= existingItemQty) : 0,
+        totalAmount:
+          state.totalAmount > 0
+            ? state.totalAmount - existingItemPrice * existingItemQty
+            : 0,
+      };
     }
   }
+
   return defaultCart;
 };
 
@@ -53,10 +72,12 @@ const CartProvider = (props) => {
 
   const cartContext = {
     items: cartState.items,
+    totalQuantity: cartState.totalQuantity,
     totalAmount: cartState.totalAmount,
     addItem: addCartItem,
     removeItem: removeCartItem,
   };
+
   return (
     <CartContext.Provider value={cartContext}>
       {props.children}

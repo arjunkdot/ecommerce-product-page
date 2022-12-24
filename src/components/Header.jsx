@@ -8,7 +8,7 @@ import Navbar from "./Navbar";
 const Header = (props) => {
   const [isMobNavVisible, setIsMobNavVisible] = useState(false);
   const [isCartVisible, setIsCartVisible] = useState(false);
-  const { items } = useContext(CartContext);
+  const { totalQuantity } = useContext(CartContext);
   // Handle mobile menu visibilty
   const mobMenuHandler = () => {
     setIsMobNavVisible(!isMobNavVisible);
@@ -59,7 +59,7 @@ const Header = (props) => {
             className="cart-icon"
             alt="Cart"
           />
-          <span className="header-cart-badge">{items.length}</span>
+          <span className="header-cart-badge">{totalQuantity}</span>
         </div>
         {isCartVisible ? <Cart /> : null}
         <div className="user-avatar-container">

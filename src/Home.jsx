@@ -26,7 +26,7 @@ const Home = () => {
 
   function addToCartHandler(e) {
     e.preventDefault();
-    addItem({id: data.productID, name: data.productName, quantity: itemCount, price: data.price})
+    addItem({ id: data.productID, name: data.productName, quantity: itemCount, price: data.price });
   }
 
   return (
@@ -48,12 +48,12 @@ const Home = () => {
           </span>
           <div className="product-price-container">
             <span className="product-price">
-              ${data ? parseFloat(data.discountedPrice).toFixed(2) : null}
+              ${data ? parseFloat(data.price).toFixed(2) : null}
             </span>
             <BadgePrimary>{data ? data.discount : null}%</BadgePrimary>
           </div>
           <span className="product-original-price">
-            ${data ? parseFloat(data.price).toFixed(2) : null}
+            ${data ? parseFloat(data.oldPrice).toFixed(2) : null}
           </span>
           <div className="product-actions">
             <Counter count={itemCount} countHandler={setItemCount} />

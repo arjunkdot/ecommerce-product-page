@@ -29,7 +29,6 @@ const App = () => {
   };
 
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
-  const [cartItems, setCartItems] = useState([{qty: 3, productID:"1"}]);
 
   return (
     <CartProvider>
