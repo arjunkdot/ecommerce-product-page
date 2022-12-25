@@ -35,6 +35,7 @@ const ShoppingCartItem = styled.div`
   gap: 0.5rem;
   align-items: center;
   margin-bottom: 15px;
+  min-width: 275px;
   &:last-child {
     margin-bottom: 0px;
   }

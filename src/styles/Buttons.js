@@ -20,6 +20,11 @@ const Button = styled.button`
   img:first-child{
     margin-right: 0.75rem;
   }
+
+  @media (max-width: ${({ theme }) => theme.media.small}) {
+    font-size: 1rem;
+    max-height: 58px;
+  }
 `;
 
 // Primary Button
@@ -43,7 +48,6 @@ export const ButtonPrimaryBlock = styled(ButtonPrimary)`
 
 /// Primary Block Button w/ Shadow
 export const ButtonPrimaryBlockShadow = styled(ButtonPrimary)`
-  width: 100%;
   box-shadow: 0px 20px 25px 0px hsl(25, 100%, 95%);
 
   &:hover{

@@ -7,6 +7,9 @@ const Badge = styled.span`
   font-size: 0.9rem;
   font-weight: 700;
   padding: 5px 8px;
+  @media (max-width: ${({ theme }) => theme.media.small}) {
+    font-size: 1rem;
+  }
 `;
 
 export const BadgePrimary = styled(Badge)`

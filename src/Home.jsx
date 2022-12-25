@@ -26,7 +26,12 @@ const Home = () => {
 
   function addToCartHandler(e) {
     e.preventDefault();
-    addItem({ id: data.productID, name: data.productName, quantity: itemCount, price: data.price });
+    addItem({
+      id: data.productID,
+      name: data.productName,
+      quantity: itemCount,
+      price: data.price,
+    });
   }
 
   return (
@@ -78,10 +83,27 @@ export default Home;
 const Homepage = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  margin-top: 5rem;
 
-  .product-meta,
+  @media (max-width: ${({ theme }) => theme.media.medium}) {
+    grid-template-columns: unset;
+    margin-top: unset;
+    grid-template-rows: repeat(2, auto);
+  }
+
   .product-image {
-    padding: 8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .product-meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 400px;
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
+      padding: 1.5rem;
+    }
   }
 
   .product-category {
@@ -100,6 +122,10 @@ const Homepage = styled.section`
     font-size: 2.25rem;
     font-weight: 700;
     margin-bottom: 1.25rem;
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
+      font-size: 1.75rem;
+      margin-top: 0.25rem;
+    }
   }
 
   .product-description {
@@ -108,6 +134,9 @@ const Homepage = styled.section`
     display: block;
     line-height: 1.5;
     margin-bottom: 1.5rem;
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
+      line-height: 1.75;
+    }
   }
 
   .product-price-container {
@@ -122,6 +151,9 @@ const Homepage = styled.section`
     font-size: 1.5rem;
     font-weight: bold;
     margin-right: 0.75rem;
+    @media (max-width: ${({ theme }) => theme.media.small}) {
+      font-size: 1.75rem;
+    }
   }
 
   .product-original-price {
@@ -129,11 +161,28 @@ const Homepage = styled.section`
     font-weight: 700;
     font-size: 0.85rem;
     text-decoration: line-through;
+    @media (max-width: ${({ theme }) => theme.media.small}) {
+      position: relative;
+      text-align: right;
+      display: inline-block;
+      top: -35px;
+      font-size: 1rem;
+    }
   }
 
   .product-actions {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     margin-top: 1.5rem;
+    @media (max-width: ${({ theme }) => theme.media.small}) {
+      grid-template-columns: unset;
+      grid-template-rows: repeat(2, 1fr);
+      margin-top: unset;
+      div {
+        &:first-child {
+          margin-bottom: 1rem;
+        }
+      }
+    }
   }
 `;

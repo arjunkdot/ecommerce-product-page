@@ -35,8 +35,8 @@ const ShoppingCart = styled.div`
   width: 320px;
   min-height: 200px;
   height: auto;
-  top: 85px;
-  right: 20px;
+  top: 45px;
+  right: -160px;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 15px 35px -5px;

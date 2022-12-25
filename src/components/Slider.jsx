@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Overlay } from "../styles/Overlay";
 
@@ -23,7 +23,7 @@ const Slider = ({ images, thumbnails }) => {
       <Carousel
         images={images}
         thumbnails={thumbnails}
-        showNav={false}
+        showControls={false}
         visibilityHandler={setIsOverlayVisible}
       />
     </>
@@ -34,6 +34,18 @@ export default Slider;
 
 const Carousel = ({ images, thumbnails, showControls, visibilityHandler }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showNav, setShowNav] = useState(showControls);
+  // Show control on mobile view regardless of the preference
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 576) {
+        setShowNav(true);
+      } else {
+        setShowNav(showControls);
+      }
+    }
+    window.addEventListener("resize", handleResize);
+  }, []);
 
   function handleNavigation(mode) {
     if (mode == "prev" && currentSlide != 0) {
@@ -44,22 +56,23 @@ const Carousel = ({ images, thumbnails, showControls, visibilityHandler }) => {
     }
   }
 
-  function toggleOverlay(clickedSlide) {
-    setCurrentSlide(clickedSlide);
+  function toggleOverlay() {
+    // Do not show modal carousel if screen size is smaller than 576px
+    if (window.innerWidth < 576) return;
     visibilityHandler(true);
   }
 
   return (
     <ProductCarousel>
       <div className="product-image-spotlight">
-        {showControls ? (
+        {showNav ? (
           <button
             className="close-button"
             onClick={() => visibilityHandler(false)}
           >
             <svg
               width="18px"
-              height="21spx"
+              height="21px"
               version="1.1"
               viewBox="0 0 23 24"
               xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +85,7 @@ const Carousel = ({ images, thumbnails, showControls, visibilityHandler }) => {
           </button>
         ) : null}
 
-        {showControls ? (
+        {showNav ? (
           <button
             onClick={() => handleNavigation("prev")}
             className="product-images-nav product-images-nav--prev"
@@ -88,7 +101,7 @@ const Carousel = ({ images, thumbnails, showControls, visibilityHandler }) => {
           </button>
         ) : null}
 
-        {showControls ? (
+        {showNav ? (
           <button
             onClick={() => handleNavigation("next")}
             className="product-images-nav product-images-nav--next"
@@ -114,7 +127,7 @@ const Carousel = ({ images, thumbnails, showControls, visibilityHandler }) => {
               <img
                 src={"images/" + image}
                 key={i}
-                onClick={() => toggleOverlay(i)}
+                onClick={() => toggleOverlay()}
               />
             );
           })}
@@ -157,12 +170,24 @@ const ProductCarousel = styled.div`
       object-fit: cover;
       cursor: pointer;
     }
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
+      width: 100%;
+      height: 300px;
+      border-radius: unset;
+      img {
+        object-fit: cover;
+        object-position: center bottom;
+      }
+    }
   }
   .product-thumbnails {
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: 385px;
+    @media (max-width: ${({ theme }) => theme.media.small}) {
+      display: none;
+    }
   }
   .product-thumbnail {
     display: block;
@@ -217,12 +242,32 @@ const ProductCarousel = styled.div`
       stroke: ${({ theme }) => theme.colors.orange};
       transition: all 0.3s ease-in-out;
     }
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
+      top: calc(55% - 45px);
+      width: 40px;
+      height: 40px;
+
+      svg {
+        width: 25%;
+        height: 25%;
+        overflow: visible;
+        top: -5px;
+        position: relative;
+        left: -5px;
+      }
+    }
   }
   .product-images-nav--prev {
     left: -22px;
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
+      left: 1.5rem;
+    }
   }
   .product-images-nav--next {
     right: -22px;
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
+      right: 1.5rem;
+    }
   }
   .close-button {
     position: absolute;
