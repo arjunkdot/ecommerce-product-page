@@ -6,6 +6,7 @@ import { Toast } from "./styles/Toasts";
 import Counter from "./components/Counter";
 import Slider from "./components/Slider";
 import { CartContext } from "./store/CartContext";
+import Skeleton from "./components/Skeleton";
 
 const Home = () => {
   const [data, setData] = useState(null);
@@ -51,24 +52,34 @@ const Home = () => {
                 images={data.productImages}
                 thumbnails={data.productThumbnails}
               />
-            ) : null}
+            ) : (
+              <Skeleton style="photo" />
+            )}
           </div>
           <div className="product-meta">
-            <span className="product-category">Sneaker Company</span>
+            <span className="product-category">{data ? data.brand : <Skeleton style="subhead" />}</span>
             <span className="product-name">
-              {data ? data.productName : null}
+              {data ? data.productName : <Skeleton style="title" />}
             </span>
             <span className="product-description">
-              {data ? data.productDescripiton : null}
+              {data ? data.productDescripiton : <Skeleton style="paragraph" />}
             </span>
             <div className="product-price-container">
               <span className="product-price">
-                ${data ? parseFloat(data.price).toFixed(2) : null}
+                {data ? (
+                  '$'+parseFloat(data.price).toFixed(2)
+                ) : (
+                  <Skeleton style="tag" />
+                )}
               </span>
               <BadgePrimary>{data ? data.discount : null}%</BadgePrimary>
             </div>
             <span className="product-original-price">
-              ${data ? parseFloat(data.oldPrice).toFixed(2) : null}
+              {data ? (
+                "$" + parseFloat(data.oldPrice).toFixed(2)
+              ) : (
+                <Skeleton style="tag" />
+              )}
             </span>
             <div className="product-actions">
               <Counter count={itemCount} countHandler={setItemCount} />

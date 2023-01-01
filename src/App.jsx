@@ -40,6 +40,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
           </Routes>
+         
         </ThemeProvider>
       </BrowserRouter>
     </CartProvider>
