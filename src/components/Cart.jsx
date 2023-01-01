@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { CartContext } from "../store/CartContext";
 import { ButtonPrimaryBlock } from "../styles/Buttons";
 import CartItem from "./CartItem";
-import OutsideClickHandler from "./OutSideClickHandler";
+import OutsideClickHandler from "./OutsideClickHandler";
 
 const Cart = ({visibiltiyHandler}) => {
   const { items, removeItem } = useContext(CartContext);
