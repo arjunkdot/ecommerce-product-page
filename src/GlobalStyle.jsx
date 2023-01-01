@@ -13,7 +13,7 @@ html {
 }
 
 #root{
-  height: calc(100vh - 50px);
+  height: calc(100vh - 63px);
   @media (max-width: ${({ theme }) => theme.media.medium}){
     height: 100%;
   }
@@ -48,20 +48,23 @@ a{
 }
 .footer {
   width: 100%;
-  background-color: hsl(0, 0%, 8%);
-  padding: 1.15rem;
+  border-top: 1px solid hsl(0, 0%, 95%);
+  max-width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem 1.15rem;
   font-size: 0.7rem;
-  color: hsl(0, 0%, 41%);
+  color: hsl(0, 0%, 65%);
 }
 .attribution {
   text-align: center;
 }
 .footer a{
-  color: hsl(0, 0%, 65%);
+  color:  hsl(0, 0%, 40%);
   text-decoration: none;
 }
 .footer a:hover{
-  color: hsl(0, 0%, 100%);
+  color: hsl(0, 0%, 20%);
 }
 `;
 

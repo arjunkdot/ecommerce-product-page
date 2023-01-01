@@ -11,11 +11,11 @@ const outsideClickManage = (ref, clickHandler) => {
   document.addEventListener('mousedown', handleClickOutside);
 };
 
-const OutsideClickHandler = ({ children, clickHandler }) => {
+const OutSideClickHandler = ({ children, clickHandler }) => {
   const wrapperRef = useRef(null);
   outsideClickManage(wrapperRef, clickHandler);
 
   return <div ref={wrapperRef}>{children}</div>
 } 
 
-export default OutsideClickHandler;
+export default OutSideClickHandler;
