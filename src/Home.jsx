@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { ButtonPrimaryBlockShadow } from "./styles/Buttons";
 import { BadgePrimary } from "./styles/Badges";
+import { Toast } from "./styles/Toasts";
 import Counter from "./components/Counter";
 import Slider from "./components/Slider";
 import { CartContext } from "./store/CartContext";
@@ -9,8 +10,8 @@ import { CartContext } from "./store/CartContext";
 const Home = () => {
   const [data, setData] = useState(null);
   const [itemCount, setItemCount] = useState(0);
+  const [isToastVisible, setIsToastVisible] = useState(false);
   const { addItem } = useContext(CartContext);
-
   useEffect(function () {
     fetch("./data.json")
       .then(function (response) {
@@ -32,49 +33,60 @@ const Home = () => {
       quantity: itemCount,
       price: data.price,
     });
+    if (itemCount > 0) {
+      setIsToastVisible(true);
+      setTimeout(() => {
+        setIsToastVisible(false);
+      }, 2000);
+    }
   }
 
   return (
-    <div className="container">
-      <Homepage>
-        <div className="product-image">
-          {data ? (
-            <Slider
-              images={data.productImages}
-              thumbnails={data.productThumbnails}
-            />
-          ) : null}
-        </div>
-        <div className="product-meta">
-          <span className="product-category">Sneaker Company</span>
-          <span className="product-name">{data ? data.productName : null}</span>
-          <span className="product-description">
-            {data ? data.productDescripiton : null}
-          </span>
-          <div className="product-price-container">
-            <span className="product-price">
-              ${data ? parseFloat(data.price).toFixed(2) : null}
+    <>
+      <div className="container">
+        <Homepage>
+          <div className="product-image">
+            {data ? (
+              <Slider
+                images={data.productImages}
+                thumbnails={data.productThumbnails}
+              />
+            ) : null}
+          </div>
+          <div className="product-meta">
+            <span className="product-category">Sneaker Company</span>
+            <span className="product-name">
+              {data ? data.productName : null}
             </span>
-            <BadgePrimary>{data ? data.discount : null}%</BadgePrimary>
+            <span className="product-description">
+              {data ? data.productDescripiton : null}
+            </span>
+            <div className="product-price-container">
+              <span className="product-price">
+                ${data ? parseFloat(data.price).toFixed(2) : null}
+              </span>
+              <BadgePrimary>{data ? data.discount : null}%</BadgePrimary>
+            </div>
+            <span className="product-original-price">
+              ${data ? parseFloat(data.oldPrice).toFixed(2) : null}
+            </span>
+            <div className="product-actions">
+              <Counter count={itemCount} countHandler={setItemCount} />
+              <ButtonPrimaryBlockShadow onClick={addToCartHandler}>
+                <img
+                  src="./images/icon-cart-white.svg"
+                  width="16"
+                  height="16"
+                  alt=""
+                />
+                Add to cart
+              </ButtonPrimaryBlockShadow>
+            </div>
           </div>
-          <span className="product-original-price">
-            ${data ? parseFloat(data.oldPrice).toFixed(2) : null}
-          </span>
-          <div className="product-actions">
-            <Counter count={itemCount} countHandler={setItemCount} />
-            <ButtonPrimaryBlockShadow onClick={addToCartHandler}>
-              <img
-                src="./images/icon-cart-white.svg"
-                width="16"
-                height="16"
-                alt=""
-              />{" "}
-              Add to cart
-            </ButtonPrimaryBlockShadow>
-          </div>
-        </div>
-      </Homepage>
-    </div>
+        </Homepage>
+      </div>
+      {isToastVisible ? <Toast>Added to cart</Toast> : null}
+    </>
   );
 };
 
@@ -101,7 +113,11 @@ const Homepage = styled.section`
     flex-direction: column;
     justify-content: center;
     max-width: 400px;
+    @media (max-width: ${({ theme }) => theme.media.large}) {
+      max-width: 300px;
+    }
     @media (max-width: ${({ theme }) => theme.media.medium}) {
+      max-width: 100%;
       padding: 1.5rem;
     }
   }
@@ -161,7 +177,7 @@ const Homepage = styled.section`
     font-weight: 700;
     font-size: 0.85rem;
     text-decoration: line-through;
-    @media (max-width: ${({ theme }) => theme.media.small}) {
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
       position: relative;
       text-align: right;
       display: inline-block;
@@ -174,7 +190,7 @@ const Homepage = styled.section`
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     margin-top: 1.5rem;
-    @media (max-width: ${({ theme }) => theme.media.small}) {
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
       grid-template-columns: unset;
       grid-template-rows: repeat(2, 1fr);
       margin-top: unset;

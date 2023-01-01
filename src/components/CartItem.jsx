@@ -39,7 +39,9 @@ const ShoppingCartItem = styled.div`
   &:last-child {
     margin-bottom: 0px;
   }
-
+  @media (max-width: ${({ theme }) => theme.media.medium}) {
+    min-width: 100%;
+  }
   .cart-item-image-container {
     width: 42px;
     height: 42px;

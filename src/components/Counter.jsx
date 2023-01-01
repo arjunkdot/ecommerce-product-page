@@ -45,7 +45,7 @@ const QtyCounter = styled.div`
   align-items: center;
   max-width: 135px;
   padding: 0.9rem;
-  @media (max-width: ${({ theme }) => theme.media.small}) {
+  @media (max-width: ${({ theme }) => theme.media.medium}) {
     max-width: unset;
     font-size: 1rem;
     padding: 1.25rem 0.9rem;

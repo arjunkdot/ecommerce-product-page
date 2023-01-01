@@ -35,8 +35,8 @@ const ShoppingCart = styled.div`
   width: 320px;
   min-height: 200px;
   height: auto;
-  top: 45px;
-  right: -160px;
+  top: 35px;
+  right: -80px;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 15px 35px -5px;
@@ -51,7 +51,7 @@ const ShoppingCart = styled.div`
     font-size: 0.9rem;
     font-weight: bold;
   }
-
+  
   .shopping-cart-body {
     padding: 20px;
     min-height: 140px;
@@ -69,9 +69,15 @@ const ShoppingCart = styled.div`
     color: ${({ theme }) => theme.colors.darkGrayishBlue};
   }
 
-  @media (max-width: ${({ theme }) => theme.media.small}) {
+  @media (max-width: ${({ theme }) => theme.media.medium}){
+    position: fixed;
+    top: 110px;
+    right: unset;
     width: calc(100% - 20px);
     min-height: 210px;
     left: 10px;
+  }
+  @media (max-width: ${({ theme }) => theme.media.small}) {
+   top: 80px;
   }
 `;

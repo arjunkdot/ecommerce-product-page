@@ -21,7 +21,7 @@ const Button = styled.button`
     margin-right: 0.75rem;
   }
 
-  @media (max-width: ${({ theme }) => theme.media.small}) {
+  @media (max-width: ${({ theme }) => theme.media.medium}) {
     font-size: 1rem;
     max-height: 58px;
   }

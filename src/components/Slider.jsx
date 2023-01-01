@@ -38,13 +38,17 @@ const Carousel = ({ images, thumbnails, showControls, visibilityHandler }) => {
   // Show control on mobile view regardless of the preference
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth < 576) {
+      if (window.innerWidth < 768) {
         setShowNav(true);
       } else {
         setShowNav(showControls);
       }
     }
     window.addEventListener("resize", handleResize);
+    
+    // Check condition on load
+    handleResize();
+
   }, []);
 
   function handleNavigation(mode) {
@@ -58,7 +62,7 @@ const Carousel = ({ images, thumbnails, showControls, visibilityHandler }) => {
 
   function toggleOverlay() {
     // Do not show modal carousel if screen size is smaller than 576px
-    if (window.innerWidth < 576) return;
+    if (window.innerWidth < 768) return;
     visibilityHandler(true);
   }
 
@@ -170,14 +174,21 @@ const ProductCarousel = styled.div`
       object-fit: cover;
       cursor: pointer;
     }
+    @media (max-width: ${({ theme }) => theme.media.large}) {
+      width: 340px;
+      height: 340px;
+    }
     @media (max-width: ${({ theme }) => theme.media.medium}) {
       width: 100%;
-      height: 300px;
+      height: 380px;
       border-radius: unset;
       img {
         object-fit: cover;
         object-position: center bottom;
       }
+    }
+    @media (max-width: ${({ theme }) => theme.media.small}) {
+      height: 300px;
     }
   }
   .product-thumbnails {
@@ -185,7 +196,7 @@ const ProductCarousel = styled.div`
     align-items: center;
     justify-content: space-between;
     max-width: 385px;
-    @media (max-width: ${({ theme }) => theme.media.small}) {
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
       display: none;
     }
   }

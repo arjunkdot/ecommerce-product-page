@@ -60,9 +60,13 @@ const Header = (props) => {
             className="cart-icon"
             alt="Cart"
           />
-          <span className="header-cart-badge">{totalQuantity}</span>
+          {totalQuantity > 0 ? (
+            <span className="header-cart-badge">{totalQuantity}</span>
+          ) : null}
         </div>
-        {isCartVisible ? <Cart visibiltiyHandler={setIsCartVisible} /> : null}
+        <div className="cart-container">
+          {isCartVisible ? <Cart visibiltiyHandler={setIsCartVisible} /> : null}
+        </div>
         <div className="user-avatar-container">
           <img
             src="./images/image-avatar.png"
@@ -76,6 +80,23 @@ const Header = (props) => {
 };
 
 const MainHeader = styled.header`
+  @keyframes shake {
+    0%{
+      transform: rotate(0deg);
+    }
+    25%{
+      transform: rotate(-10deg);
+    }
+    50%{
+      transform: rotate(0deg);
+    }
+    75%{
+      transform: rotate(10deg);
+    }
+    100%{
+      transform: rotate(0deg);
+    }
+  };
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
   display: flex;
   align-items: center;
@@ -108,6 +129,7 @@ const MainHeader = styled.header`
     position: absolute;
     top: -5px;
     right: -8px;
+    animation: shake 0.3s linear 0.2s forwards;
   }
 
   @media (max-width: ${({ theme }) => theme.media.small}) {
@@ -190,6 +212,9 @@ const MainHeader = styled.header`
     @media (max-width: ${({ theme }) => theme.media.medium}) {
       display: none;
     }
+  }
+  .cart-container {
+    position: relative;
   }
 `;
 export default Header;
