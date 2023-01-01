@@ -12,7 +12,7 @@ const Header = (props) => {
 
   // Handle mobile menu visibilty
   const mobMenuHandler = () => {
-    setIsMobNavVisible(false);
+    setIsMobNavVisible(!isMobNavVisible);
   };
 
   // Handle mobile menu visibilty

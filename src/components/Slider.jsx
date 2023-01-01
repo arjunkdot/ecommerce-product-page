@@ -297,6 +297,9 @@ const ProductCarousel = styled.div`
         fill: ${({ theme }) => theme.colors.orange};
       }
     }
+    @media (max-width: ${({ theme }) => theme.media.medium}) {
+      display: none;
+    }
   }
 `;
 
