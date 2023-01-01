@@ -132,6 +132,7 @@ const Carousel = ({ images, thumbnails, showControls, visibilityHandler }) => {
                 src={"images/" + image}
                 key={i}
                 onClick={() => toggleOverlay()}
+                alt=""
               />
             );
           })}
@@ -149,7 +150,7 @@ const Carousel = ({ images, thumbnails, showControls, visibilityHandler }) => {
                 i == currentSlide ? "active" : ""
               }`}
             >
-              <img src={"images/" + thumbnail} />;
+              <img src={"images/" + thumbnail} alt="" />;
             </li>
           );
         })}
