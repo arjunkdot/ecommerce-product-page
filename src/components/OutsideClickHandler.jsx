@@ -17,5 +17,4 @@ const OutSideClickHandler = ({ children, clickHandler }) => {
 
   return <div ref={wrapperRef}>{children}</div>
 } 
-
 export default OutSideClickHandler;
